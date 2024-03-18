@@ -1,0 +1,4 @@
+GET http://127.0.0.1:8089/config.json HTTP/1.1
+###
+
+GET http://127.0.0.1:8089/Eco_Teams_Office_Gray_Light_Piattaforme/img.png HTTP/1.1

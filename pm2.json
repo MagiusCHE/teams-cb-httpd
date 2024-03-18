@@ -1,0 +1,17 @@
+{
+    "apps": [
+        {
+            "name": "teamscb",
+            "script": "server.js",
+            "cwd": "./",
+            "log_file": "./files/logs/webserver.log",
+            "error_file": "./files/logs/webserver_stderr.log",
+            "combine_logs": true,
+            "pid": "./files/pids/webserver.pid",
+            "instances": "1",
+            "exec_mode": "cluster",
+            "comment": "Enable -dbg * by namespaces to activate debug log. See: https://www.npmjs.com/package/debug",
+            "args_disabled": "-d -dbg {app.name}:*"
+        }
+    ]
+}
