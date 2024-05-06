@@ -28,7 +28,7 @@ const requestListener = function(req, res) {
 
         //res.hea ('Access-Control-Allow-Origin', 'http://localhost:8888');
 
-        if (req.url == "/config.json") {
+        if (req.url?.split('?')[0] == "/config.json") {
             let data = JSON.stringify(config_file_to_send)
             res.writeHead(200);
             console.log("  - Served:", '/config.json')
