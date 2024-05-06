@@ -1,11 +1,13 @@
-[
-    {
-        "filetype": "png",
-        "id": "MyCustomBG1",
-        "name": "My Custom BG 1",
-        "$src_localpath": "/home/<user>/Desktop/path/to/real/image.png",
-        "$thumb_src_localpath": "/home/<user>/Desktop/path/to/real/image.png",
-        "src": "/MyCustomBG1/img.png",
-        "thumb_src": "/MyCustomBG1/img.png"
-    }
-]
+{
+    "videoBackgroundImages": [
+        {
+            "filetype": "png",
+            "id": "MyCustomBG1",
+            "name": "My Custom BG 1",
+            "$src_localpath": "/home/<user>/Desktop/path/to/real/image.png",
+            "$thumb_src_localpath": "/home/<user>/Desktop/path/to/real/image.png",
+            "src": "/MyCustomBG1/img.png",
+            "thumb_src": "/MyCustomBG1/img.png"
+        }
+    ]
+}

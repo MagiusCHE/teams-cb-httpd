@@ -1,4 +1,5 @@
+
 GET http://127.0.0.1:5333/config.json HTTP/1.1
 ###
 
-GET http://127.0.0.1:5333/Eco_Teams_Office_Gray_Light_Piattaforme/img.png HTTP/1.1
+GET http://127.0.0.1:5333/Eco_Teams_Office_Gray_Light_Piattaforme.png HTTP/1.1

@@ -6,17 +6,24 @@ const host = process.argv?.[2] || '127.0.0.1';
 const port = process.argv?.[3] || '5333';
 const background_root = "backgrounds"
 
-const backgrounds_cfg = JSON.parse(fs.readFileSync(path.join(background_root, "config.json")).toString())
+const cfg_path = path.resolve(path.join(background_root, "config.json"))
 
-const config_file_to_send = []
-backgrounds_cfg.forEach(i => {
+console.log("Reading config from:", cfg_path)
+const backgrounds_cfg = JSON.parse(fs.readFileSync(cfg_path).toString())
+
+const config_file_to_send = {
+    videoBackgroundImages: []
+}
+backgrounds_cfg.videoBackgroundImages.forEach(i => {
     const tos = Object.assign({}, i)
     for (k in tos) {
         if (k.startsWith("$")) {
             delete tos[k]
         }
     }
-    config_file_to_send.push(tos)
+    tos.src = path.join("/evergreen-assets/backgroundimages/", i.src.trimStart('/'))
+    tos.thumb_src = path.join("/evergreen-assets/backgroundimages/", i.thumb_src.trimStart('/'))
+    config_file_to_send.videoBackgroundImages.push(tos)
 })
 
 const requestListener = function(req, res) {
@@ -25,19 +32,23 @@ const requestListener = function(req, res) {
 
         // Add Access-Control-Allow-Origin header to allow cross-origin requests
         res.setHeader('Access-Control-Allow-Origin', '*');
-
-        //res.hea ('Access-Control-Allow-Origin', 'http://localhost:8888');
-
+        console.log("  - Requested:", req.method, req.url)
         if (req.url?.split('?')[0] == "/config.json") {
+            if (req.method == "OPTIONS") {
+                res.setHeader("Allow", "GET, OPTIONS")
+                res.writeHead(200);
+                res.end();
+                return
+            }
             let data = JSON.stringify(config_file_to_send)
+            res.setHeader("Content-Type", "application/json")
             res.writeHead(200);
-            console.log("  - Served:", '/config.json')
+            console.log("  - Served:", data)
             res.end(data);
-        } else {            
-            let file
-            console.log("  - Requested:", req.url)
-            backgrounds_cfg.forEach(i => {
-                if (i.src == req.url ) {
+        } else {
+            let file            
+            backgrounds_cfg.videoBackgroundImages.forEach(i => {
+                if (i.src == req.url) {
                     file = i['$src_localpath'] || path.join(background_root, i.src)
                 } else if (i.thumb_src == req.url) {
                     file = i['$thumb_src_localpath'] || path.join(background_root, i.thumb_src)
