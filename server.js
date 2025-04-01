@@ -48,7 +48,7 @@ const requestListener = function(req, res) {
         } else {
             let file            
             backgrounds_cfg.videoBackgroundImages.forEach(i => {
-                if (i.src == req.url) {
+                if (i.src == decodeURIComponent(req.url)) {
                     file = i['$src_localpath'] || path.join(background_root, i.src)
                 } else if (i.thumb_src == req.url) {
                     file = i['$thumb_src_localpath'] || path.join(background_root, i.thumb_src)
